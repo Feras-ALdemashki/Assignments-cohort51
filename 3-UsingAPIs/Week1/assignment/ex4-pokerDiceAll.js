@@ -27,9 +27,8 @@ exercise file.
 import { rollDie } from '../../helpers/pokerDiceRoller.js';
 
 export function rollDice() {
-  // TODO Refactor this function
   const dice = [1, 2, 3, 4, 5];
-  return rollDie(1);
+  return Promise.all(dice.map((die) => rollDie(die)));
 }
 
 function main() {
@@ -43,4 +42,4 @@ if (process.env.NODE_ENV !== 'test') {
   main();
 }
 
-// TODO Replace this comment by your explanation that was asked for in the assignment description.
+//  now we have  5 different promises, and each one is running  as a different task in an async way .
