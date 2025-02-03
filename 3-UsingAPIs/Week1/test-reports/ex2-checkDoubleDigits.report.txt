@@ -3,7 +3,7 @@
  PASS  .dist/3-UsingAPIs/Week1/unit-tests/ex2-checkDoubleDigits.test.js
   api-wk1-ex2-checkDoubleDigits
     ✅ should exist and be executable (2 ms)
-    ✅ should have all TODO comments removed (1 ms)
+    ✅ should have all TODO comments removed
     ✅ `checkDoubleDigits` should not contain unneeded console.log calls (1 ms)
     ✅ should call new Promise()
     ✅ `resolve()` should be called with a one argument
@@ -17,7 +17,7 @@
 Test Suites: 1 passed, 1 total
 Tests:       11 passed, 11 total
 Snapshots:   0 total
-Time:        1.067 s, estimated 3 s
+Time:        0.91 s
 Ran all test suites matching /C:\\Users\\feras\\Desktop\\HYF-assignment\\Assignments-cohort51\\.dist\\3-UsingAPIs\\Week1\\unit-tests\\ex2-checkDoubleDigits.test.js/i.
 No linting errors detected.
 No spelling errors detected.
