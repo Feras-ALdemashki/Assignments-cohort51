@@ -47,4 +47,4 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // the previous problem is no longer exist.
-// now we return the promise so the rolling will stop after the promise is resolved or rejected
+// because the promise only settle once , any other resolves or rejects will be ignored
