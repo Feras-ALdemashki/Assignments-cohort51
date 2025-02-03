@@ -21,7 +21,9 @@ export const getAnonName = (firstName) => {
 };
 
 function main() {
-  getAnonName('John', console.log);
+  getAnonName('John')
+    .then((response) => console.log(response))
+    .catch((error) => console.error(error.message));
 }
 
 // ! Do not change or remove the code below
