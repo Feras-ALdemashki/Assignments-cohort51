@@ -15,15 +15,18 @@ import { rollDie } from '../../helpers/pokerDiceRoller.js';
 
 export function rollDice() {
   const dice = [1, 2, 3, 4, 5];
-  // TODO complete this function; use Promise.race() and rollDie()
-  rollDie(1); // TODO placeholder: modify as appropriate
+  const diceRolls = dice.map(() => rollDie());
+  return Promise.race(diceRolls);
 }
 
 // Refactor this function to use async/await and try/catch
-function main() {
-  rollDice()
-    .then((results) => console.log('Resolved!', results))
-    .catch((error) => console.log('Rejected!', error.message));
+async function main() {
+  try {
+    const result = await rollDice();
+    console.log('Resolved!', results);
+  } catch (error) {
+    console.log('Rejected!', error.message);
+  }
 }
 
 // ! Do not change or remove the code below
@@ -31,4 +34,4 @@ if (process.env.NODE_ENV !== 'test') {
   main();
 }
 
-// TODO Replace this comment by your explanation that was asked for in the assignment description.
+// promise.race does not cancel the other promises, the other promises will keep going but we will not get their results as we get the first promise result

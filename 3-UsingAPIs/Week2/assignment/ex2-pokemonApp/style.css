@@ -1,1 +1,9 @@
 /* add your styling here */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.btn {
+  margin-bottom: 10px;
+}
