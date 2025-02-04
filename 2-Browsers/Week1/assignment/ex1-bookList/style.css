@@ -1,1 +1,12 @@
-/* Write your style here */
+li {
+  display: inline-block;
+  width: 400px;
+  margin: 8px;
+  padding: 8px;
+  text-align: -webkit-match-parent;
+  unicode-bidi: isolate;
+}
+
+ul {
+  list-style-type: none;
+}
