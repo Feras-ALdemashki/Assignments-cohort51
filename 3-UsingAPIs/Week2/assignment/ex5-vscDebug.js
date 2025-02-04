@@ -5,31 +5,36 @@ Use the VSCode Debugger to fix the bugs
 --------------------------------------------------------------- --------------*/
 async function getData(url) {
   const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`something wen wrong: ${response.status}`);
+  }
   return response.json();
 }
 
 function renderLaureate({ knownName, birth, death }) {
-  console.log(`\nName: ${knownName.en}`);
-  console.log(`Birth: ${birth.date}, ${birth.place.city.en}`);
-  if (death) {
-    console.log(`Death: ${death.date}, ${death.place.city.en}`);
-  }
-  l;
+  console.log(`\nName: ${knownName?.en || 'Unknown'}`);
+
+  const birthDate = birth?.date || 'Unknown';
+  const birthPlace = birth?.place?.locationString?.en || 'Unknown';
+  console.log(`Birth: ${birthDate}, ${birthPlace}`);
+
+  const deathDate = death?.date || 'unknown';
+  const deathPlace = death?.place?.locationString?.en || 'unknown';
+  console.log(`Death: ${deathDate}, ${deathPlace}`);
 }
-console.log(laureates);
 function renderLaureates(laureates) {
   laureates.forEach(renderLaureate);
 }
 
 async function fetchAndRender() {
   try {
-    const { laureates } = await getData(
+    const data = await getData(
       'http://api.nobelprize.org/2.0/laureates?birthCountry=Netherlands&format=json&csvLang=en'
     );
-    renderLaureates(laureates);
+    renderLaureates(data.laureates);
   } catch (err) {
-    console.error(`Something went wrong: ${err.message}`);
+    console.error(err);
   }
 }
-console.log(laureates);
+
 fetchAndRender();
