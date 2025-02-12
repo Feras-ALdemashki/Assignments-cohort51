@@ -24,53 +24,57 @@ Try and avoid using global variables. As much as possible, try and use function
 parameters and return values to pass data back and forth.
 ------------------------------------------------------------------------------*/
 async function fetchData(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Fetch failed ${response.status}`);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Fetch failed ${response.status}`);
+    }
+    const jsonData = await response.json();
+    return jsonData.results;
+  } catch (error) {
+    console.error(error);
   }
-  const jsonData = await response.json();
-  // return the results array only from the data
-  return jsonData.results;
 }
-// function to create the elements button and the select menu
 
-function fetchAndPopulatePokemons(pokemons) {
-  //creating the button'get pokemon'
+function fetchAndPopulatePokemons() {
   const buttonElement = document.createElement('button');
-  buttonElement.innerText = 'Get pokemon!';
+  buttonElement.innerText = 'Get Pokémon!';
   document.body.appendChild(buttonElement);
-  // adding a class to the btn so it can be  styled in in css
   buttonElement.classList.add('btn');
-  //creating the select menu
+
   const selectElement = document.createElement('select');
   document.body.appendChild(selectElement);
-  // when the button is clicked it will create an option for every pokemon  and then it will append it to select menu
-  buttonElement.addEventListener('click', () =>
-    pokemons.forEach((pokemon) => {
-      const option = document.createElement('option');
-      option.innerText = pokemon.name;
-      option.value = pokemon.url;
-      selectElement.appendChild(option);
-    })
-  );
-  //storing the selected value in a const and invoke the fetchImage function with this value as URL and the pokemon name as image alt
+
+  buttonElement.addEventListener('click', async () => {
+    selectElement.innerHTML = '';
+    try {
+      const pokemons = await fetchData(
+        'https://pokeapi.co/api/v2/pokemon?limit=151'
+      );
+      pokemons.forEach((pokemon) => {
+        const option = document.createElement('option');
+        option.innerText = pokemon.name;
+        option.value = pokemon.url;
+        selectElement.appendChild(option);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
   selectElement.addEventListener('change', (e) => {
     const pokemonUrl = e.target.value;
-    //  access the options array and getting the text of the selected index
     const pokemonAlt = e.target.options[e.target.selectedIndex].text;
     fetchImage(pokemonUrl, pokemonAlt);
   });
 }
-// function to fetch image data from the url and render it
+
 async function fetchImage(pokemonUrl, pokemonAlt) {
   try {
-    // check if there is a previous image if it there remove it
     const existingImage = document.querySelector('img');
     if (existingImage) {
       existingImage.remove();
     }
-    //creating the image element
-
     const response = await fetch(pokemonUrl);
     const pokemonData = await response.json();
     const pokemonSrc = pokemonData.sprites.front_default;
@@ -79,17 +83,12 @@ async function fetchImage(pokemonUrl, pokemonAlt) {
     pokemonImageElement.alt = pokemonAlt;
     document.body.appendChild(pokemonImageElement);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
-async function main() {
-  try {
-    const response = await fetchData(
-      'https://pokeapi.co/api/v2/pokemon?limit=151'
-    );
-    fetchAndPopulatePokemons(response);
-  } catch (error) {
-    console.log(error);
-  }
+
+function main() {
+  fetchAndPopulatePokemons();
 }
-window.addEventListener('onload', main());
+
+window.addEventListener('load', main);
