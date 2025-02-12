@@ -33,7 +33,7 @@ async function fetchAndRender() {
     );
     renderLaureates(data.laureates);
   } catch (err) {
-    console.error(err);
+    console.error(`something went wrong:${err.message}`);
   }
 }
 
