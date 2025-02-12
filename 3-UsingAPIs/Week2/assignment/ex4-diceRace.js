@@ -23,7 +23,7 @@ export function rollDice() {
 async function main() {
   try {
     const result = await rollDice();
-    console.log('Resolved!', results);
+    console.log('Resolved!', result);
   } catch (error) {
     console.log('Rejected!', error.message);
   }

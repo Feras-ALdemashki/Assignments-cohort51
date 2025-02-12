@@ -23,7 +23,7 @@ async function requestData(url) {
   if (!response) {
     throw new Error(`something went wrong: ${error.message}`);
   }
-  return response.json();
+  return await response.json();
 }
 
 function renderImage(data) {

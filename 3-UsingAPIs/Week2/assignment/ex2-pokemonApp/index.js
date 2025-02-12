@@ -24,17 +24,13 @@ Try and avoid using global variables. As much as possible, try and use function
 parameters and return values to pass data back and forth.
 ------------------------------------------------------------------------------*/
 async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Fetch failed ${response.status}`);
-    }
-    const jsonData = await response.json();
-    // return the results array only from the data
-    return jsonData.results;
-  } catch (error) {
-    throw new Error('fetch failed');
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Fetch failed ${response.status}`);
   }
+  const jsonData = await response.json();
+  // return the results array only from the data
+  return jsonData.results;
 }
 // function to create the elements button and the select menu
 
@@ -74,6 +70,7 @@ async function fetchImage(pokemonUrl, pokemonAlt) {
       existingImage.remove();
     }
     //creating the image element
+
     const response = await fetch(pokemonUrl);
     const pokemonData = await response.json();
     const pokemonSrc = pokemonData.sprites.front_default;
